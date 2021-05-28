@@ -11,17 +11,20 @@ const getters = {
     },
     get_length(state, getters){
         return getters.get_cart.length;
-        //return state.purchases.filter(purchase => purchase.price > 0).length
     }
 }
 const mutations = {
-    add_shop(state,item){
+    add_shop(state,[item,ketchup, mayonnaise, barbecueSauce]){
         const record = state.purchases.find(purchase => purchase.id === item.id)
         const id = item.id;
         const cat = item.cat;
         const name = item.name;
         const price = item.price;
+        const k = ketchup;
+        const m = mayonnaise;
+        const b = barbecueSauce;
         const src= item.src;
+        //console.log(ketchup);
 	    if (!record) {
 	      state.purchases.push({
 	        id,
@@ -29,12 +32,36 @@ const mutations = {
             name,
             price,
             src,
+            k,
+            m,
+            b,
 	        quantity: 1
 	      })
+          //console.log(state.purchases);
 	    } else {
-	      record.quantity++
+	      record.quantity++;
+          record.k += k ;
+          record.m += m ;
+          record.b += b ;
 	    }
     },
+    delete_shop(state,item){
+        const record = state.purchases.find(purchase => purchase.id === item.id)
+        const i = state.purchases.indexOf(item);
+	    if (record) {
+	      state.purchases.splice(i , 1)
+        }
+	    
+    },
+    completionOrders(state){
+        alert('Completion orders');
+        
+        for(let i = 0 ; i <= state.purchases.length + 1 ; i++){
+            state.purchases.pop();
+        }
+        //console.log('purchases: ' + state.purchases);
+       
+    }
 
     // [types.ADD_TO_CART] (state, { id }) {
 	//     const record = state.purchases.find(p => p.id === id)

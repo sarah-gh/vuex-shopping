@@ -18,7 +18,7 @@ const state = {
             name: 'Chana pizza', 
             rating:3.2 , 
             price: 16,
-            text:'Pizza · Fresh · Vegetable · Vegetarian',
+            text:['Pizza', 'Fresh', 'Vegetable', 'Vegetarian'],
             src: require('@/assets/img/pepperoni-pizza-2.jpg'),
             
         },
@@ -28,7 +28,7 @@ const state = {
             name: 'Bacon cheese burger', 
             rating:5, 
             price: 16 ,
-            text:'Beef · Burger · Fresh · Patty',
+            text:['Beef', 'Burger', 'Fresh', 'Patty'],
             src: require('@/assets/img/burger.jpg')},
         { 
             id: 3, 
@@ -36,7 +36,7 @@ const state = {
             name: 'Special hamburger', 
             rating:5, 
             price: 18,
-            text:'Beef · Burger · Fresh · Patty',
+            text:['Beef', 'Burger', 'Fresh', 'Patty'],
             src: require('@/assets/img/burger.jpg') },
         { 
             id: 4, 
@@ -68,7 +68,7 @@ const state = {
             name: 'Italian pizza', 
             rating:3.4 ,
             price: 18,
-            text:'Pizza · Fresh · Vegetable · Vegetarian',
+            text:['Pizza', 'Fresh', 'Vegetable', 'Vegetarian'],
             src: require('@/assets/img/pepperoni-pizza-2.jpg') },
         { 
             id: 8, 
@@ -84,7 +84,7 @@ const state = {
             name: 'Cheese Pizza', 
             rating:5 ,
             price: 12 ,
-            text:'Pizza · Fresh · Vegetable · Vegetarian',
+            text:['Pizza', 'Fresh', 'Vegetable', 'Vegetarian'],
             src: require('@/assets/img/pepperoni-pizza-2.jpg')},
         { 
             id: 10, 
@@ -92,7 +92,7 @@ const state = {
             name: 'Chili burger', 
             rating:2.5 ,
             price: 14, 
-            text:'Beef · Burger · Fresh · Patty',
+            text:['Beef', 'Burger', 'Fresh', 'Patty'],
             src: require('@/assets/img/burger.jpg') },
     ]
 }

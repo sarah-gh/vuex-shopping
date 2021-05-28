@@ -7,7 +7,19 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  // base: process.env.BASE_URL,
+  scrollBehavior(to, from, savePosition){
+    if(savePosition){
+      return savePosition
+    }
+    else{
+      const position = {};
+      if(to.hash){
+        position.selector = to.hash;
+        return false;
+      }
+    }
+  },
+  base: process.env.BASE_URL,
   routes
 })
 

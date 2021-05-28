@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <my-header></my-header>
-    <nav-bar></nav-bar>
     <div class="section">
       <div class="sell">
+        <nav-bar></nav-bar>
         <popularDishes id="sec-1"></popularDishes>
         <pizza id="sec-2"></pizza>
         <special-packs id="sec-3"></special-packs>
@@ -11,17 +11,21 @@
       <div class="cart-container">
         <div class="cart">
           <input type="text" class="search" />
+          <div v-if="!showShop" class="empty">The cart is empty</div>
           <div v-for="(item, index) in showShopping" :key="index">
               <my-Shop v-bind:item="item"></my-Shop>
               <hr>
           </div>
           <div>
-            <p>
-              {{myprice}}
-            </p>
+            <div class="price" v-if="showShop">
+              <p>Order cost : <span>{{myprice}}$</span></p>
+              <p>Delivery cost : <span>{{delivery}}.00$</span></p>
+              <p>Discount : <span>{{discountPrice}}$</span></p>
+              <p class="pay">You pay : <span>{{ finalPrice }}$</span></p>
+            </div>
           </div>
         </div>
-        <button>I want this order</button>
+        <button v-if="showShop" @click="completion()">I want this order</button>
       </div>
     </div>
   </div>
@@ -41,7 +45,12 @@ export default {
   data(){
     return{
       item: Object,
-      myprice: 0
+      myprice: 0,
+      showShop: true,
+      finalPrice: 0,
+      discount: 10, //// Percentage
+      discountPrice: 0,
+      delivery: 3.00,
     }
   },
   components: {
@@ -54,35 +63,43 @@ export default {
   },
   computed: {
     showShopping(){
-      for(let i=0; i < this.$store.state.purchases ;i++){
-        //this.myprice += this.item.price;
-        }
       this.price();
       return this.$store.getters.get_cart;
     }
   },
   methods:{
-    // showShopping(){
-    //   //console.log(this.$store.getters.get_cart);
-    //   return this.$store.getters.get_cart;
-    // }
+    
     price(){
       this.item = null;
       this.item = this.$store.getters.get_cart;
-      // console.log(this.item.length);
-      // console.log(this.item);
       this.myprice = 0;
+      this.finalPrice = 0;
       for(let i=0; i < this.item.length ;i++){
-        //console.log('price : '+ this.item[i].price);
         this.myprice += this.item[i].price * this.item[i].quantity ;
       }
-    }
+      
+      // this.delivery = this.delivery.toFixed(2);
+      this.finalPrice =  ( (this.myprice * ((100 - this.discount)/100))+ this.delivery ).toFixed(2);
+      this.discountPrice = (this.myprice * ((this.discount)/100)).toFixed(2);
+      this.myprice = this.myprice.toFixed(2);
+      if(this.item.length === 0){
+        this.showShop = false;
+      }
+      else{
+        this.showShop = true;
+      }
+    },
+    completion(){
+          this.$store.commit("completionOrders");
+          //console.log(this.$store.getters.get_cart)
+    },
   },
+  
   // watch: {
-  //   "$store.state.purchases": function(n) {
+  //   "this.$store.getters.get_cart": function(n) {
   //     console.log(n);
-  //     console.log('change state');
-  //     this.showShopping();
+  //     //console.log('change state');
+  //     this.price();
   //   },
   // }
 }
@@ -100,31 +117,58 @@ export default {
     }
   }
   .cart-container{
-    width: 45%;
-    margin-top: -38.5px;
+    width: 40%;
+    //margin-top: -38.5px;
     display: flex;
     flex-direction: column;
     
     button{
-      width: 78.5%;
-      margin: 0 auto;
+      width: 83.55%;
+      //margin: 0 auto;
       height: 60px;
       font-size: 20px;
-      background-color: rgb(255, 123, 0);
+      background-color: rgb(253, 138, 30);
       border: 0px;
       box-shadow: 0px;
       padding: 10px;
+      justify-self: flex-end;
+      align-self: flex-end;
+      cursor: pointer;
+      &:hover{
+        background-color: rgb(255, 123, 0);
+      }
     }
   }
   .cart{
-    width: 75%;
-    margin: 0 auto;
+    width: 80%;
+    //margin: 0 auto;
     //flex-grow: 5;
     padding: 10px;
     background-color: rgb(233, 233, 233);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    justify-self: flex-end;
+    align-self: flex-end;
+    .empty{
+      width: 100%;
+      text-align: center;
+      font-size:20px;
+      padding: 20px 0;
+    }
+    .price{
+      padding: 10px 30px 50px 30px;
+      p{
+        //width: 100%;
+        display: flex;
+        flex-direction:row;
+        justify-content:space-between;
+      }
+      .pay{
+        color: rgb(167, 26, 68);
+        font-weight: bold;
+      }
+    }
   }
   .search{
     width: 70%;
