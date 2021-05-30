@@ -9,21 +9,23 @@
         <special-packs id="sec-3"></special-packs>
       </div>
       <div class="cart-container">
-        <div class="cart">
-          <input type="text" class="search" />
-          <div v-if="!showShop" class="empty">The cart is empty</div>
-          <transition-group name="bounceUp" tag="div" class="list-group">
-            <div v-for="(item, index) in showShopping" :key="index" class="list-group-item">
-                <my-Shop v-bind:item="item"></my-Shop>
-                <hr>
-            </div>
-          </transition-group>
-          <div>
-            <div class="price" v-if="showShop">
-              <p>Order cost : <span>{{myprice}}$</span></p>
-              <p>Delivery cost : <span>{{delivery}}.00$</span></p>
-              <p>Discount : <span>{{discountPrice}}$</span></p>
-              <p class="pay">You pay : <span>{{ finalPrice }}$</span></p>
+        <div class="mycart">
+          <div class="cart">
+            <input type="text" class="search" />
+            <div v-if="!showShop" class="empty">The cart is empty</div>
+            <transition-group name="bounceUp" tag="div" class="list-group">
+              <div v-for="(item, index) in showShopping" :key="index" class="list-group-item">
+                  <my-Shop v-bind:item="item"></my-Shop>
+                  <hr>
+              </div>
+            </transition-group>
+            <div>
+              <div class="price" v-if="showShop">
+                <p>Order cost : <span>{{myprice}}$</span></p>
+                <p>Delivery cost : <span>{{delivery}}.00$</span></p>
+                <p>Discount : <span>{{discountPrice}}$</span></p>
+                <p class="pay">You pay : <span>{{ finalPrice }}$</span></p>
+              </div>
             </div>
           </div>
         </div>
@@ -123,9 +125,9 @@ export default {
     //margin-top: -38.5px;
     display: flex;
     flex-direction: column;
-    
+    padding:0 0 0 11%;
     button{
-      width: 83.55%;
+      width: 100%;
       //margin: 0 auto;
       height: 60px;
       font-size: 20px;
@@ -141,8 +143,10 @@ export default {
       }
     }
   }
-  .cart{
-    width: 80%;
+  .mycart {
+    width: 100%;
+    .cart{
+    //width: 100%;
     //margin: 0 auto;
     //flex-grow: 5;
     padding: 10px;
@@ -171,6 +175,7 @@ export default {
         font-weight: bold;
       }
     }
+  }
   }
   .search{
     width: 70%;
