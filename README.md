@@ -3,6 +3,7 @@
 ## Project setup
 ```
 npm install
+npm install --save vue2-animate
 ```
 
 ### Compiles and hot-reloads for development

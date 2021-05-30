@@ -12,10 +12,12 @@
         <div class="cart">
           <input type="text" class="search" />
           <div v-if="!showShop" class="empty">The cart is empty</div>
-          <div v-for="(item, index) in showShopping" :key="index">
-              <my-Shop v-bind:item="item"></my-Shop>
-              <hr>
-          </div>
+          <transition-group name="bounceUp" tag="div" class="list-group">
+            <div v-for="(item, index) in showShopping" :key="index" class="list-group-item">
+                <my-Shop v-bind:item="item"></my-Shop>
+                <hr>
+            </div>
+          </transition-group>
           <div>
             <div class="price" v-if="showShop">
               <p>Order cost : <span>{{myprice}}$</span></p>
@@ -144,7 +146,7 @@ export default {
     //margin: 0 auto;
     //flex-grow: 5;
     padding: 10px;
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(240, 240, 240);
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -5,6 +5,8 @@
 </template>
 
 <style lang="scss">
+$animationDuration: 0.5s; // specify animation duration. Default value: 1s 
+//@import "https://unpkg.com/vue2-animate/dist/vue2-animate.min.css";
 body{
   margin: 0;
 }
