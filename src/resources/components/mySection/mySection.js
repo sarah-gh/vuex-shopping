@@ -1,51 +1,52 @@
 import { mapActions } from 'vuex'
-
 export default {
     data() {
       return{
         words: [],
-        ketchup: 0,
-        mayonnaise: 0,
-        barbecueSauce: 0,
-        //isActive: false
+        tagFood: []
       }
     },
     props: {
         item: {
-        type: Object
-      }
+          type: Object
+        },
+        index: {
+          type: Number
+        },
+        category:{
+          type: String
+        }
     },
-    beforeMount() {
-      this.words = this.item.text;
-      //console.log(this.words);
+    mounted() {
+      this.words = this.item.details;
+      this.tagFood = [...this.item.tags];
     },
+      
+      
     methods:{
         addcart(){
-            if(this.ketchup <= 0 && this.mayonnaise <= 0 && this.barbecueSauce <= 0){
-              alert('Choose your sauce');
+            let items = [];
+            items.push(this.item);
+            for (let i = 0; i < items.length; i++){
+              for (let j = 0; j < items[i].tags.length; j++){
+                items[i].tags[j].number = this.tagFood[j].number;
+                //console.log(items[i].tags[j].number)
+              }
             }
-            else{
-              this.$store.commit("add_shop", [this.item, this.ketchup, this.mayonnaise, this.barbecueSauce]);
-              this.ketchup = 0;
-              this.mayonnaise = 0;
-              this.barbecueSauce = 0;
+            this.$store.commit("add_shop", items);
+            //console.log(items);
+            for (let i = 0; i < this.tagFood.length; i++){
+              this.tagFood[i].number = 0;
             }
-            //this.$store.commit("add_shop", this.item);
-            //console.log(this.$store.getters.get_cart)
         },
         addchoices(item){
-          if(item == 'ketchup'){
-            this.ketchup++
+          for(let i=0; i< 3; i++) {
+            if(this.tagFood[i].name == item.name){
+              this.tagFood[i].number++;
+            }
           }
-          if(item == 'mayonnaise'){
-            this.mayonnaise++
-          }
-          if(item == 'barbecueSauce'){
-            this.barbecueSauce++
-          }
-          // else{
-          //   this.barbecueSauce++
-          // }
+          // console.log('this.item.tags : ')
+          // console.log(this.item.tags);
         },
         ...mapActions([
           'addToCart'

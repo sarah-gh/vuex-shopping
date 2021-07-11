@@ -3,11 +3,11 @@
         <img :src='item.src'>
         <div class="text">
             <h3> {{item.name}} ({{item.quantity}}) </h3>
-            <p class="chosen">
-                <span v-if="item.k>0" class="number">ketchup ({{item.k}})</span>
-                <span v-if="item.m>0" class="number">mayonnaise ({{item.m}})</span> 
-                <span v-if="item.b>0" class="number">barbecue({{item.b}})</span>
-            </p>
+            <div class="chosen">
+                <div v-for="(i, index) in item.tags" :key="index">
+                    <span class="number" v-if="i.number > 0"> {{ i.name }} {{ i.number }}</span>
+                </div>
+            </div>
             <span>Total cost : {{item.price}}$ </span>
         </div>
         <div class="btn">

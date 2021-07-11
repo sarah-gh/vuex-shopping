@@ -29,13 +29,23 @@
             padding: 0;
             //font-size: 20px;
         }
+        .price{
+            margin-top: 15px;
+            font-size:20px;
+            display: flex;
+        }
         .choise{
+            font-size: 14px;
+            display: flex;
+            .tags{
+                margin-left: 5px;
+            }
             .word{
                 background-color:rgb(235, 235, 235);
                 border-radius: 15px;
-                padding: 5px 16px;
+                padding: 5px 12px;
                 font-size: 13px;
-                margin: 10px 10px 10px 0 ;
+                margin: 10px 5px 10px 0 ;
                 cursor: pointer;
                 span{
                     font-size: 13px;
@@ -44,9 +54,9 @@
             .active{
                 background-color:rgb(127, 190, 111);
                 border-radius: 15px;
-                padding: 5px 16px;
+                padding: 5px 12px;
                 font-size: 13px;
-                margin: 10px 10px 10px 0 ;
+                margin: 10px 5px 10px 0 ;
                 cursor: pointer;
                 color: #fff;
                 span{
@@ -79,9 +89,9 @@
             //padding: 0 10px 0 0 ;
             color: gray;
         }
-        span{
-            font-size: 20px;
-        }
+        // span{
+        //     font-size: 20px;
+        // }
         
     }
     .plus{

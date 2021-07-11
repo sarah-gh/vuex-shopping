@@ -4,9 +4,15 @@
     <div class="section">
       <div class="sell">
         <nav-bar></nav-bar>
-        <popularDishes id="sec-1"></popularDishes>
-        <pizza id="sec-2"></pizza>
-        <special-packs id="sec-3"></special-packs>
+        <div v-for="(items, i) in showFoods" :key="i">
+            <h2 id="sec-`${index}`">
+              {{ items.category }}
+            </h2>
+            <div v-for="(item, index) in items.foodInfo" :key="index">
+              <my-section :item="item" :index="index" :category="items.category"></my-section>
+            </div>
+        </div>
+
       </div>
       <div class="cart-container">
         <div class="mycart">
@@ -14,8 +20,8 @@
             <input type="text" class="search" />
             <div v-if="!showShop" class="empty">The cart is empty</div>
             <transition-group name="bounceUp" tag="div" class="list-group">
-              <div v-for="(item, index) in showShopping" :key="index" class="list-group-item">
-                  <my-Shop v-bind:item="item"></my-Shop>
+              <div v-for="(food, index) in showShopping" :key="index" class="list-group-item">
+                  <my-Shop :item="food"></my-Shop>
                   <hr>
               </div>
             </transition-group>
@@ -36,13 +42,14 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import myHeader from '../resources/components/header/header.vue'
 import navBar from '../resources/components/navbar/navbar.vue'
 import pizza from '../resources/components/pizza/pizza.vue'
 import popularDishes from '../resources/components/popularDishes/popularDishes.vue'
 import specialPacks from '../resources/components/specialPacks/specialPacks.vue'
 import myShop from "../resources/components/myShop/myShop.vue"
+import mySection from "../resources/components/mySection/mySection.vue"
+
 
 export default {
   name: 'Home',
@@ -63,9 +70,13 @@ export default {
     pizza,
     popularDishes,
     specialPacks,
-    myShop
-  },
+    myShop,
+    mySection
+    },
   computed: {
+    showFoods(){
+      return this.$store.getters.get_foods;
+    },
     showShopping(){
       this.price();
       return this.$store.getters.get_cart;
@@ -81,7 +92,6 @@ export default {
       for(let i=0; i < this.item.length ;i++){
         this.myprice += this.item[i].price * this.item[i].quantity ;
       }
-      
       // this.delivery = this.delivery.toFixed(2);
       this.finalPrice =  ( (this.myprice * ((100 - this.discount)/100))+ this.delivery ).toFixed(2);
       this.discountPrice = (this.myprice * ((this.discount)/100)).toFixed(2);
@@ -95,17 +105,8 @@ export default {
     },
     completion(){
           this.$store.commit("completionOrders");
-          //console.log(this.$store.getters.get_cart)
     },
   },
-  
-  // watch: {
-  //   "this.$store.getters.get_cart": function(n) {
-  //     console.log(n);
-  //     //console.log('change state');
-  //     this.price();
-  //   },
-  // }
 }
 </script>
 

@@ -3,8 +3,8 @@ import { mapActions } from 'vuex'
 export default {
     props: {
         item: {
-        type: Object
-      }
+          type: Object
+        }
     },
     methods:{
       deletecart(item){
